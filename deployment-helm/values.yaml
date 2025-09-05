@@ -1,0 +1,20 @@
+mongo:
+  image: mongo:6.0
+  containerPort: 27017
+  replicas: 1
+
+app:
+  image:
+    repository: abdullah78623/organic-ghee
+    tag: v1
+  containerPort: 5656
+  replicas: 1
+  mongoUrl: "mongodb://{{ .Release.Name }}-mongo:27017/restorent"
+
+service:
+  app:
+    type: LoadBalancer   
+    port: 5656
+  mongo:
+    type: ClusterIP
+    port: 27017
